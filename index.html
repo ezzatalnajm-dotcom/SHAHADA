@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>شهادة | أ.عزت شعبان</title>
+<meta name="description" content="تطبيق إنشاء وإرسال شهادات منتصف الفصل لطلاب النجم في الأحياء">
+<meta name="theme-color" content="#0d001a">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./assets/icon-192.png">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="شهادة">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <div class="brand">
+      <span class="star">⭐</span>
+      <div>
+        <h1 class="amiri">شهادة</h1>
+        <small>النجم في الأحياء · أ.عزت شعبان</small>
+      </div>
+    </div>
+    <button class="icon-btn" onclick="switchView('settings')" title="الإعدادات">⚙️</button>
+  </div>
+
+  <main>
+    <section id="view-home" class="view active"></section>
+    <section id="view-cert" class="view"></section>
+    <section id="view-broadcast" class="view"></section>
+    <section id="view-settings" class="view"></section>
+  </main>
+
+  <nav class="tabbar">
+    <button class="tab active" data-view="home"><span class="ic">🏠</span>الرئيسية</button>
+    <button class="tab" data-view="cert"><span class="ic">✍️</span>الشهادات</button>
+    <button class="tab" data-view="broadcast"><span class="ic">📢</span>رسالة عامة</button>
+    <button class="tab" data-view="settings"><span class="ic">⚙️</span>الإعدادات</button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+</div>
+
+<script src="./assets/xlsx.full.min.js"></script>
+<script src="./assets/data.js"></script>
+<script src="./assets/app.js"></script>
+</body>
+</html>
