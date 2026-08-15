@@ -6,7 +6,7 @@ const LS_SENTLOG  = "shahada_sentlog_v1";
 
 let STATE = {
   students: [],
-  settings: { teacherName: "عزت شعبان", sheetUrl: "" },
+  settings: { teacherName: "عزت شعبان", sheetUrl: "", theme: "dark" },
   sentLog: {},          // { studentId: true }  -> أُرسلت شهادته
   currentView: "home",
   cert: { studentId: null, picks: {}, versions: {} }, // picks[crit] = level or null, versions[crit] = idx
@@ -17,7 +17,7 @@ let STATE = {
 /* ---------- تخزين ---------- */
 function loadAll(){
   try{ STATE.students = JSON.parse(localStorage.getItem(LS_STUDENTS) || "[]"); }catch(e){ STATE.students = []; }
-  try{ STATE.settings = Object.assign({teacherName:"عزت شعبان", sheetUrl:""}, JSON.parse(localStorage.getItem(LS_SETTINGS) || "{}")); }catch(e){}
+  try{ STATE.settings = Object.assign({teacherName:"عزت شعبان", sheetUrl:"", theme:"dark"}, JSON.parse(localStorage.getItem(LS_SETTINGS) || "{}")); }catch(e){}
   try{ STATE.sentLog = JSON.parse(localStorage.getItem(LS_SENTLOG) || "{}"); }catch(e){ STATE.sentLog = {}; }
 }
 function saveStudents(){ localStorage.setItem(LS_STUDENTS, JSON.stringify(STATE.students)); }
@@ -616,6 +616,19 @@ function doReset(){
   switchView("home");
 }
 
+/* ---------- المود (نهاري/ليلي) ---------- */
+function applyTheme(){
+  const isLight = STATE.settings.theme === "light";
+  document.body.classList.toggle("light-mode", isLight);
+  const btn = document.getElementById("btnTheme");
+  if(btn) btn.textContent = isLight ? "☀️" : "🌙";
+}
+function toggleTheme(){
+  STATE.settings.theme = STATE.settings.theme === "light" ? "dark" : "light";
+  saveSettings();
+  applyTheme();
+}
+
 /* ============ تشغيل ============ */
 window.addEventListener("beforeinstallprompt", (e)=>{
   e.preventDefault();
@@ -624,6 +637,8 @@ window.addEventListener("beforeinstallprompt", (e)=>{
 
 document.addEventListener("DOMContentLoaded", ()=>{
   loadAll();
+  applyTheme();
+  document.getElementById("btnTheme").onclick = toggleTheme;
   document.querySelectorAll(".tab").forEach(t=> t.onclick = ()=> switchView(t.dataset.view));
   switchView("home");
   if("serviceWorker" in navigator){
