@@ -85,6 +85,12 @@ function handleFile(file){
 
 /* ---------- مزامنة مع Google Sheet (اختياري) ---------- */
 async function syncFromSheet(){
+  // لو المستخدم لسه واقف في شاشة الإعدادات وكاتب رابط بس مادوسش حفظ، ناخده مباشرة من الحقل
+  const fieldEl = document.getElementById("sheetUrl");
+  if(fieldEl && fieldEl.value.trim()){
+    STATE.settings.sheetUrl = fieldEl.value.trim();
+    saveSettings();
+  }
   const url = (STATE.settings.sheetUrl || "").trim();
   if(!url){ toast("⚠️ حط رابط ربط الشيت الأول من الإعدادات"); return false; }
   try{
@@ -565,6 +571,11 @@ function renderSettings(){
   document.getElementById("btnShare").onclick = doShare;
   document.getElementById("btnSync").onclick = ()=> switchView("home");
   document.getElementById("btnReset").onclick = doReset;
+  // حفظ تلقائي للرابط أول ما يكتب، عشان مايحتاجش يدوس زرار حفظ منفصل
+  document.getElementById("sheetUrl").oninput = (e)=>{
+    STATE.settings.sheetUrl = e.target.value.trim();
+    saveSettings();
+  };
 }
 function saveSheetUrl(){
   const v = document.getElementById("sheetUrl").value.trim();
